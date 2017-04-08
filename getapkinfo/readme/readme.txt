@@ -1,36 +1,38 @@
-(4.7����)ȫ��ͨ���޺�����޷���IPTV�����л��ص����������
+更改了
+
+(4.7更新)全新通用无害解决无法从IPTV界面切换回第三方桌面的
 
 
-��д�ˣ�һ��һ��
-qq��64652178
+编写人：一零一二
+qq：64652178
 
 
-���ֻ�Ϊ�úн���IPTV������޷����ص������棬ֻ�����������С��������еķ�����Ϊͨ������ϵͳ�ļ���ʵ��ң�ط��أ�������ɺ������������޷���������IPTV���桰ȷ���������޷�ʹ�õ����⡣�µĽű�ͨ��getevent��am���ʵ�ֺ�̨���ң�������������޸��κ��ļ��������ȶ��ɿ���
+部分华为悦盒进入IPTV界面后，无法返回当贝桌面，只能重启机顶盒。网上现有的方法均为通过更改系统文件来实现遥控返回，可能造成盒子无限重启无法开机或是IPTV界面“确定“按键无法使用的问题。新的脚本通过getevent及am命令，实现后台监控遥控器按键，不修改任何文件，运行稳定可靠。
 
-����������������
+本软件共分两部分
 
-���ӽű���exitiptv.sh&&exitiptvcfg.ini����V1.1��
- 2017.04.07���£�1.����ת��windows��Linuxϵͳ�Ļ��з��ķ�ʽ�����������е��������ļ��������⣬����ȶ���
-                 2.���ӽű�������־�������������
-                 3.���ӽű�����״̬��⣬��ֻ֤��һ���ű���̬����
+盒子脚本（exitiptv.sh&&exitiptvcfg.ini）【V1.1】
+ 2017.04.07更新：1.更换转换windows和Linux系统的换行符的方式，解决多次运行导致配置文件出错问题，提高稳定性
+                 2.添加脚本运行日志，便于问题分析
+                 3.添加脚本运行状态检测，保证只有一个脚本常态运行
 
- 2017.03.27 ����:1.���Ľű�ʵ�ֿ��Զ�����鰴����
-                 2.�������˳�����ϣ����ӽ�windows���з�\n\rת��Ϊliunx���з�\n
+ 2017.03.27 更新:1.更改脚本实现可自定义八组按键；
+                 2.与计算机端程序配合，添加将windows换行符\n\r转换为liunx换行符\n
 
-�����������V0.9��
- 2017.04.07���£�1.���Ļ�������������Ϊ��̨���У����������������
-                 2.���ӻ�ȡ�ű�������־���ܣ������������
-				 3.����Զ�����нű�������ڵ���
+计算机软件【V0.9】
+ 2017.04.07更新：1.更改机顶盒重启命令为后台运行，解决软件假死问题
+                 2.添加获取脚本运行日志功能，便于问题分析
+				 3.添加远程运行脚本命令，便于调试
                 
 
- 2017.04.02���£�1.����ͨ��adb shell dumpsys activity |find "mFocusedActivity"���ֱ��������н����Զ���ȡ������Ϣ��package/activity��;
-                 2.��д�µ�ADB shellִ�к������ܹ���׼ȷ���ؽ����Ϣ
-				 3.�Ż��ļ����ͣ��ܹ�׼ȷ��Ӧִ��״̬
+ 2017.04.02更新：1.调整通过adb shell dumpsys activity |find "mFocusedActivity"命令，直接与机顶盒交互自动获取启动信息（package/activity）;
+                 2.编写新的ADB shell执行函数，能够更准确返回结果信息
+				 3.优化文件推送，能够准确反应执行状态
 
- 2017.03.27�װ棺1.ʵ�ּ�����˸���apk�ļ���ͨ��aapt�����Զ���ȡ������Ϣ��package/activity��;
-                 2.ͨ��adb shell getevent -c 1 /dev/input/event0���ʵ��������н�������ȡң�ذ����룻
-                 3.�Զ���������ӽű�exitiptv.sh��ϵ�exitiptvcfg.ini�ļ���
-                 4.��һ�佫���ӽű�exitiptv.sh�������ļ�exitiptvcfg.ini�����������У�����/system/etc/install-recovery-2.sh�Զ����ӡ�/system/etc/exitiptv.sh& ����ʵ��exitiptv.sh�ű���������
+ 2017.03.27首版：1.实现计算机端根据apk文件，通过aapt命令自动获取启动信息（package/activity）;
+                 2.通过adb shell getevent -c 1 /dev/input/event0命令，实现与机顶盒交互，获取遥控按键码；
+                 3.自动生成与盒子脚本exitiptv.sh配合的exitiptvcfg.ini文件；
+                 4.可一间将盒子脚本exitiptv.sh及配置文件exitiptvcfg.ini推送至机顶盒，并在/system/etc/install-recovery-2.sh自动添加“/system/etc/exitiptv.sh& ”，实现exitiptv.sh脚本开机启动
 
 
 
